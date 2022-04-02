@@ -17,6 +17,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
       test("answer <yes> should return text <Clean the terminals and try starting again.>", () => {
         const question = getById(0);
         const terminalsCorroded = getById(question.yes.questionId);
+
         const yesResponse = terminalsCorroded.yes.text;
 
         expect(yesResponse).toBe("Clean the terminals and try starting again.");
@@ -24,6 +25,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
       test("answer <no> should return text <Replace cables and try again.>", () => {
         const question = getById(0);
         const terminalsCorroded = getById(question.yes.questionId);
+
         const yesResponse = terminalsCorroded.no.text;
 
         expect(yesResponse).toBe("Replace cables and try again.");
@@ -34,6 +36,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
     test("answer <no> should return question <Does the car make a clicking noise?>", () => {
       const question = getById(0);
       const answerIsNo = getById(question.no.questionId);
+
       const clickingNoise = getById(2);
 
       expect(answerIsNo).toEqual(clickingNoise);
@@ -42,6 +45,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
       test("answer <yes> should return text <Replace the battery.>", () => {
         const question = getById(0);
         const answerIsNo = getById(question.no.questionId);
+
         const yesClickingNoise = answerIsNo.yes.text;
 
         expect(yesClickingNoise).toBe("Replace the battery.");
@@ -55,6 +59,29 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
         const carFailStart = getById(3);
 
         expect(noToClickingNoise).toEqual(carFailStart);
+      });
+      describe("given the question <Does the car crank up but fail to start?>", () => {
+        test("answer <yes> should return text <Check spark plug connections.>", () => {
+          const question = getById(0);
+          const noToQuestion = question.no.questionId;
+          const clickingNoise = getById(noToQuestion);
+          const failToStart = getById(clickingNoise.no.questionId);
+
+          const yesFailToStart = failToStart.yes.text;
+
+          expect(yesFailToStart).toBe("Check spark plug connections.");
+        });
+        test("answer <no> should return question <Does the engine start and then die?>", () => {
+          const question = getById(0);
+          const noToQuestion = question.no.questionId;
+          const clickingNoise = getById(noToQuestion);
+          const failToStart = getById(clickingNoise.no.questionId);
+          const noToFailToStart = getById(failToStart.no.questionId);
+
+          const engineDie = getById(4);
+
+          expect(noToFailToStart).toEqual(engineDie);
+        });
       });
     });
   });
