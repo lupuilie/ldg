@@ -7,20 +7,20 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
       const question = getById(0);
 
       // Act
-      const yesResponse = getNextQuestion(question, true);
+      const yes = getNextQuestion(question, true);
       const question1 = getById(1);
 
       // Assert
-      expect(yesResponse).toEqual(question1);
+      expect(yes).toEqual(question1);
     });
     describe("given the question <Are the battery terminals corroded?>", () => {
       test("answer <yes> should return text <Clean the terminals and try starting again.>", () => {
         const question = getById(0);
         const terminalsCorroded = getNextQuestion(question, true);
 
-        const yesResponse = terminalsCorroded.yes.text;
+        const yes = terminalsCorroded.yes.text;
 
-        expect(yesResponse).toBe("Clean the terminals and try starting again.");
+        expect(yes).toBe("Clean the terminals and try starting again.");
       });
       test("answer <no> should return text <Replace cables and try again.>", () => {
         const question = getById(0);
