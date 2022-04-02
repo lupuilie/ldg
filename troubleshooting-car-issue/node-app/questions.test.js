@@ -8,10 +8,9 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
 
       // Act
       const yes = getNextQuestion(question, true);
-      const question1 = getById(1);
 
       // Assert
-      expect(yes).toEqual(question1);
+      expect(yes).toEqual(getById(1));
     });
     describe("given the question <Are the battery terminals corroded?>", () => {
       test("answer <yes> should return text <Clean the terminals and try starting again.>", () => {
