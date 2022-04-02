@@ -7,5 +7,5 @@
 - [] Saying Hello
 - [] Printing Quotes
 - [] Retirement Calculator
-- [] Troubleshooting Car Issue
+- [x] Troubleshooting Car Issue
 - [] Counting the Number of Characters
