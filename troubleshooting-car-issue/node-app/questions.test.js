@@ -82,6 +82,59 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
 
           expect(noToFailToStart).toEqual(engineDie);
         });
+        describe("given the question <Does the engine start and then die?>", () => {
+          test("answer <no> should return text <Come back tomorrow, maybe Nea Gica can help you :)>", () => {
+            const question = getById(0);
+            const clickingNoise = getById(question.no.questionId);
+            const crankNoStart = getById(clickingNoise.no.questionId);
+            const engineStartAndDie = getById(crankNoStart.no.questionId);
+
+            const noToEngineStartAndDie = engineStartAndDie.no.text;
+
+            expect(noToEngineStartAndDie).toBe(
+              "Come back tomorrow, maybe Nea Gica can help you :)"
+            );
+          });
+          test("answer <yes> should return question <Does your car have fuel injection?>", () => {
+            const question = getById(0);
+            const clickingNoise = getById(question.no.questionId);
+            const crankNoStart = getById(clickingNoise.no.questionId);
+            const engineStartAndDie = getById(crankNoStart.no.questionId);
+
+            const yesToEngineStartAndDie = getById(
+              engineStartAndDie.yes.questionId
+            );
+            const fuelInjection = getById(5);
+
+            expect(yesToEngineStartAndDie).toEqual(fuelInjection);
+          });
+        });
+        describe("given the question <Does your car have fuel injection?>", () => {
+          test("answer <yes> should return text <Get it in for service.>", () => {
+            const question = getById(0);
+            const clickingNoise = getById(question.no.questionId);
+            const crankNoStart = getById(clickingNoise.no.questionId);
+            const engineStartAndDie = getById(crankNoStart.no.questionId);
+
+            const fuelInjection = getById(engineStartAndDie.yes.questionId);
+            const yesToFuelInjection = fuelInjection.yes.text;
+
+            expect(yesToFuelInjection).toBe("Get it in for service.");
+          });
+          test("answer <no> should return text <Check to ensure the choke is opening and closing.>", () => {
+            const question = getById(0);
+            const clickingNoise = getById(question.no.questionId);
+            const crankNoStart = getById(clickingNoise.no.questionId);
+            const engineStartAndDie = getById(crankNoStart.no.questionId);
+
+            const fuelInjection = getById(engineStartAndDie.yes.questionId);
+            const noToFuelInjection = fuelInjection.no.text;
+
+            expect(noToFuelInjection).toBe(
+              "Check to ensure the choke is opening and closing."
+            );
+          });
+        });
       });
     });
   });
