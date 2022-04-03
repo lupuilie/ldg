@@ -1,0 +1,13 @@
+{
+  "name": "ldg-car-issues-il",
+  "version": "0.0.1",
+  "description": "Send a question and get a respons",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
