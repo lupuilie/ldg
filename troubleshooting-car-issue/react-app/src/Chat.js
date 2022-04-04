@@ -53,13 +53,14 @@ function ButtonsContainer(props) {
     const nextQuestion = questions.getNextQuestion(currentQuestion, true);
     const hasMoreQuestions = nextQuestion?.yes;
     const noMoreQuestions = !hasMoreQuestions;
-    const textAnswer = currentQuestion.yes?.text || null;
+    const textAnswer = nextQuestion.answer || null;
 
     const updatedMessages = [
       ...messages,
       "ME: yes",
       hasMoreQuestions ? nextQuestion.text : textAnswer,
     ];
+
     setMessages(updatedMessages);
     if (hasMoreQuestions) setCurrentQuestion(nextQuestion);
     if (noMoreQuestions) setVisibleButtons(false);
@@ -67,15 +68,16 @@ function ButtonsContainer(props) {
 
   function handleClickNo() {
     const nextQuestion = questions.getNextQuestion(currentQuestion, false);
-    const hasMoreQuestions = nextQuestion?.no;
+    const hasMoreQuestions = nextQuestion?.yes;
     const noMoreQuestions = !hasMoreQuestions;
-    const textAnswer = currentQuestion.no?.text || null;
+    const textAnswer = nextQuestion.answer || null;
 
     const updatedMessages = [
       ...messages,
       "ME: no",
       hasMoreQuestions ? nextQuestion.text : textAnswer,
     ];
+
     setMessages(updatedMessages);
     if (hasMoreQuestions) setCurrentQuestion(nextQuestion);
     if (noMoreQuestions) setVisibleButtons(false);
