@@ -27,106 +27,164 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
           firstQuestion,
           true
         );
+
         const yes = questions.getNextQuestion(terminalsCorroded, true);
 
         expect(yes.answer).toBe("Clean the terminals and try starting again.");
       });
-      xtest("answer <no> should return text <Replace cables and try again.>", () => {
-        const question = getById(0);
-        const terminalsCorroded = getNextQuestion(question, true);
+      test("answer <no> should return text <Replace cables and try again.>", () => {
+        const questions = new Questions();
+        questions.setQuestions(data);
+        const firstQuestion = questions.getById(0);
+        const terminalsCorroded = questions.getNextQuestion(
+          firstQuestion,
+          true
+        );
 
-        const no = terminalsCorroded.no.text;
-
-        expect(no).toBe("Replace cables and try again.");
+        const no = questions.getNextQuestion(terminalsCorroded, false);
+        expect(no.answer).toBe("Replace cables and try again.");
       });
     });
   });
   describe("answer <no>", () => {
-    xtest("answer <no> should return question <Does the car make a clicking noise?>", () => {
-      const question = getById(0);
-      const clickingNoise = getNextQuestion(question, false);
+    test("answer <no> should return question <Does the car make a clicking noise?>", () => {
+      const questions = new Questions();
+      questions.setQuestions(data);
+      const firstQuestion = questions.getById(0);
+      const clickingNoise = questions.getNextQuestion(firstQuestion, false);
 
-      expect(clickingNoise).toEqual(getById(2));
+      expect(clickingNoise).toEqual(questions.getById(2));
     });
     describe("given the question <Does the car make a clicking noise?>", () => {
-      xtest("answer <yes> should return text <Replace the battery.>", () => {
-        const question = getById(0);
-        const clickingNoise = getNextQuestion(question, false);
+      test("answer <yes> should return text <Replace the battery.>", () => {
+        const questions = new Questions();
+        questions.setQuestions(data);
+        const firstQuestion = questions.getById(0);
+        const clickingNoise = questions.getNextQuestion(firstQuestion, false);
 
-        const yes = clickingNoise.yes.text;
+        const yes = questions.getNextQuestion(clickingNoise, true);
 
-        expect(yes).toBe("Replace the battery.");
+        expect(yes.answer).toBe("Replace the battery.");
       });
-      xtest("answer <no> should return question <Does the car crank up but fail to start?>", () => {
-        const question = getById(0);
-        const clickingNoise = getNextQuestion(question, false);
-        const carCrankUp = getNextQuestion(clickingNoise, false);
+      test("answer <no> should return question <Does the car crank up but fail to start?>", () => {
+        const questions = new Questions();
+        questions.setQuestions(data);
+        const firstQuestion = questions.getById(0);
+        const clickingNoise = questions.getNextQuestion(firstQuestion, false);
+        const carCrankUp = questions.getNextQuestion(clickingNoise, false);
 
-        expect(carCrankUp).toEqual(getById(3));
+        expect(carCrankUp).toEqual(questions.getById(3));
       });
       describe("given the question <Does the car crank up but fail to start?>", () => {
-        xtest("answer <yes> should return text <Check spark plug connections.>", () => {
-          const question = getById(0);
-          const clickingNoise = getNextQuestion(question, false);
-          const carCrankUp = getNextQuestion(clickingNoise, false);
+        test("answer <yes> should return text <Check spark plug connections.>", () => {
+          const questions = new Questions();
+          questions.setQuestions(data);
+          const firstQuestion = questions.getById(0);
+          const clickingNoise = questions.getNextQuestion(firstQuestion, false);
+          const carCrankUp = questions.getNextQuestion(clickingNoise, false);
 
-          const yes = carCrankUp.yes.text;
+          const yes = questions.getNextQuestion(carCrankUp, true);
 
-          expect(yes).toBe("Check spark plug connections.");
+          expect(yes.answer).toBe("Check spark plug connections.");
         });
-        xtest("answer <no> should return question <Does the engine start and then die?>", () => {
-          const question = getById(0);
-          const clickingNoise = getNextQuestion(question, false);
-          const carCrankUp = getNextQuestion(clickingNoise, false);
-          const engineStartThenDie = getNextQuestion(carCrankUp, false);
+        test("answer <no> should return question <Does the engine start and then die?>", () => {
+          const questions = new Questions();
+          questions.setQuestions(data);
+          const firstQuestion = questions.getById(0);
+          const clickingNoise = questions.getNextQuestion(firstQuestion, false);
+          const carCrankUp = questions.getNextQuestion(clickingNoise, false);
+          const engineStartThenDie = questions.getNextQuestion(
+            carCrankUp,
+            false
+          );
 
-          expect(engineStartThenDie).toEqual(getById(4));
+          expect(engineStartThenDie).toEqual(questions.getById(4));
         });
         describe("given the question <Does the engine start and then die?>", () => {
-          xtest("answer <no> should return text <Come back tomorrow, maybe Nea Gica can help you :)>", () => {
-            const question = getById(0);
-            const clickingNoise = getNextQuestion(question, false);
-            const carCrankUp = getNextQuestion(clickingNoise, false);
-            const engineStartThenDie = getNextQuestion(carCrankUp, false);
+          test("answer <no> should return text <Come back tomorrow, maybe Nea Gica can help you :)>", () => {
+            const questions = new Questions();
+            questions.setQuestions(data);
+            const firstQuestion = questions.getById(0);
+            const clickingNoise = questions.getNextQuestion(
+              firstQuestion,
+              false
+            );
+            const carCrankUp = questions.getNextQuestion(clickingNoise, false);
+            const engineStartThenDie = questions.getNextQuestion(
+              carCrankUp,
+              false
+            );
 
-            const no = engineStartThenDie.no.text;
-
-            expect(no).toBe(
+            const no = questions.getNextQuestion(engineStartThenDie, false);
+            expect(no.answer).toBe(
               "Come back tomorrow, maybe Nea Gica can help you :)"
             );
           });
-          xtest("answer <yes> should return question <Does your car have fuel injection?>", () => {
-            const question = getById(0);
-            const clickingNoise = getNextQuestion(question, false);
-            const carCrankUp = getNextQuestion(clickingNoise, false);
-            const engineStartThenDie = getNextQuestion(carCrankUp, false);
-            const fuelInjection = getNextQuestion(engineStartThenDie, true);
+          test("answer <yes> should return question <Does your car have fuel injection?>", () => {
+            const questions = new Questions();
+            questions.setQuestions(data);
+            const firstQuestion = questions.getById(0);
+            const clickingNoise = questions.getNextQuestion(
+              firstQuestion,
+              false
+            );
+            const carCrankUp = questions.getNextQuestion(clickingNoise, false);
+            const engineStartThenDie = questions.getNextQuestion(
+              carCrankUp,
+              false
+            );
+            const fuelInjection = questions.getNextQuestion(
+              engineStartThenDie,
+              true
+            );
 
-            expect(fuelInjection).toEqual(getById(5));
+            expect(fuelInjection).toEqual(questions.getById(5));
           });
         });
         describe("given the question <Does your car have fuel injection?>", () => {
-          xtest("answer <yes> should return text <Get it in for service.>", () => {
-            const question = getById(0);
-            const clickingNoise = getNextQuestion(question, false);
-            const carCrankUp = getNextQuestion(clickingNoise, false);
-            const engineStartThenDie = getNextQuestion(carCrankUp, false);
-            const fuelInjection = getNextQuestion(engineStartThenDie, true);
+          test("answer <yes> should return text <Get it in for service.>", () => {
+            const questions = new Questions();
+            questions.setQuestions(data);
+            const firstQuestion = questions.getById(0);
+            const clickingNoise = questions.getNextQuestion(
+              firstQuestion,
+              false
+            );
+            const carCrankUp = questions.getNextQuestion(clickingNoise, false);
+            const engineStartThenDie = questions.getNextQuestion(
+              carCrankUp,
+              false
+            );
+            const fuelInjection = questions.getNextQuestion(
+              engineStartThenDie,
+              true
+            );
 
-            const yes = fuelInjection.yes.text;
+            const yes = questions.getNextQuestion(fuelInjection, true);
 
-            expect(yes).toBe("Get it in for service.");
+            expect(yes.answer).toBe("Get it in for service.");
           });
-          xtest("answer <no> should return text <Check to ensure the choke is opening and closing.>", () => {
-            const question = getById(0);
-            const clickingNoise = getNextQuestion(question, false);
-            const carCrankUp = getNextQuestion(clickingNoise, false);
-            const engineStartThenDie = getNextQuestion(carCrankUp, false);
-            const fuelInjection = getNextQuestion(engineStartThenDie, true);
+          test("answer <no> should return text <Check to ensure the choke is opening and closing.>", () => {
+            const questions = new Questions();
+            questions.setQuestions(data);
+            const firstQuestion = questions.getById(0);
+            const clickingNoise = questions.getNextQuestion(
+              firstQuestion,
+              false
+            );
+            const carCrankUp = questions.getNextQuestion(clickingNoise, false);
+            const engineStartThenDie = questions.getNextQuestion(
+              carCrankUp,
+              false
+            );
+            const fuelInjection = questions.getNextQuestion(
+              engineStartThenDie,
+              true
+            );
 
-            const no = fuelInjection.no.text;
+            const no = questions.getNextQuestion(fuelInjection, false);
 
-            expect(no).toBe(
+            expect(no.answer).toBe(
               "Check to ensure the choke is opening and closing."
             );
           });
