@@ -1,15 +1,14 @@
 import { readFileSync } from "fs";
 import Questions from "ldg-car-issues-il";
 
-const rawData = readFileSync("./questions.json");
+const rawData = readFileSync("./test/questions.json");
 const data = JSON.parse(rawData);
 
 describe("given the question <Is the car silent when you turn the key?>", () => {
   describe("answer <yes>", () => {
     test("answer <yes> should return question <Are the battery terminals corroded?>", () => {
       // Arrange
-      const questions = new Questions();
-      questions.setQuestions(data);
+      const questions = new Questions(data);
       const firstQuestion = questions.getById(0);
 
       // Act
@@ -20,8 +19,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
     });
     describe("given the question <Are the battery terminals corroded?>", () => {
       test("answer <yes> should return text <Clean the terminals and try starting again.>", () => {
-        const questions = new Questions();
-        questions.setQuestions(data);
+        const questions = new Questions(data);
         const firstQuestion = questions.getById(0);
         const terminalsCorroded = questions.getNextQuestion(
           firstQuestion,
@@ -33,8 +31,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
         expect(yes.answer).toBe("Clean the terminals and try starting again.");
       });
       test("answer <no> should return text <Replace cables and try again.>", () => {
-        const questions = new Questions();
-        questions.setQuestions(data);
+        const questions = new Questions(data);
         const firstQuestion = questions.getById(0);
         const terminalsCorroded = questions.getNextQuestion(
           firstQuestion,
@@ -48,8 +45,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
   });
   describe("answer <no>", () => {
     test("answer <no> should return question <Does the car make a clicking noise?>", () => {
-      const questions = new Questions();
-      questions.setQuestions(data);
+      const questions = new Questions(data);
       const firstQuestion = questions.getById(0);
       const clickingNoise = questions.getNextQuestion(firstQuestion, false);
 
@@ -57,8 +53,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
     });
     describe("given the question <Does the car make a clicking noise?>", () => {
       test("answer <yes> should return text <Replace the battery.>", () => {
-        const questions = new Questions();
-        questions.setQuestions(data);
+        const questions = new Questions(data);
         const firstQuestion = questions.getById(0);
         const clickingNoise = questions.getNextQuestion(firstQuestion, false);
 
@@ -67,8 +62,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
         expect(yes.answer).toBe("Replace the battery.");
       });
       test("answer <no> should return question <Does the car crank up but fail to start?>", () => {
-        const questions = new Questions();
-        questions.setQuestions(data);
+        const questions = new Questions(data);
         const firstQuestion = questions.getById(0);
         const clickingNoise = questions.getNextQuestion(firstQuestion, false);
         const carCrankUp = questions.getNextQuestion(clickingNoise, false);
@@ -77,8 +71,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
       });
       describe("given the question <Does the car crank up but fail to start?>", () => {
         test("answer <yes> should return text <Check spark plug connections.>", () => {
-          const questions = new Questions();
-          questions.setQuestions(data);
+          const questions = new Questions(data);
           const firstQuestion = questions.getById(0);
           const clickingNoise = questions.getNextQuestion(firstQuestion, false);
           const carCrankUp = questions.getNextQuestion(clickingNoise, false);
@@ -88,8 +81,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
           expect(yes.answer).toBe("Check spark plug connections.");
         });
         test("answer <no> should return question <Does the engine start and then die?>", () => {
-          const questions = new Questions();
-          questions.setQuestions(data);
+          const questions = new Questions(data);
           const firstQuestion = questions.getById(0);
           const clickingNoise = questions.getNextQuestion(firstQuestion, false);
           const carCrankUp = questions.getNextQuestion(clickingNoise, false);
@@ -102,8 +94,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
         });
         describe("given the question <Does the engine start and then die?>", () => {
           test("answer <no> should return text <Come back tomorrow, maybe Nea Gica can help you :)>", () => {
-            const questions = new Questions();
-            questions.setQuestions(data);
+            const questions = new Questions(data);
             const firstQuestion = questions.getById(0);
             const clickingNoise = questions.getNextQuestion(
               firstQuestion,
@@ -121,8 +112,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
             );
           });
           test("answer <yes> should return question <Does your car have fuel injection?>", () => {
-            const questions = new Questions();
-            questions.setQuestions(data);
+            const questions = new Questions(data);
             const firstQuestion = questions.getById(0);
             const clickingNoise = questions.getNextQuestion(
               firstQuestion,
@@ -143,8 +133,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
         });
         describe("given the question <Does your car have fuel injection?>", () => {
           test("answer <yes> should return text <Get it in for service.>", () => {
-            const questions = new Questions();
-            questions.setQuestions(data);
+            const questions = new Questions(data);
             const firstQuestion = questions.getById(0);
             const clickingNoise = questions.getNextQuestion(
               firstQuestion,
@@ -165,8 +154,7 @@ describe("given the question <Is the car silent when you turn the key?>", () => 
             expect(yes.answer).toBe("Get it in for service.");
           });
           test("answer <no> should return text <Check to ensure the choke is opening and closing.>", () => {
-            const questions = new Questions();
-            questions.setQuestions(data);
+            const questions = new Questions(data);
             const firstQuestion = questions.getById(0);
             const clickingNoise = questions.getNextQuestion(
               firstQuestion,

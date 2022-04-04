@@ -3,12 +3,12 @@ import Questions from "ldg-car-issues-il";
 import data from "./questions.json";
 
 function App() {
-  const questions = new Questions();
-  questions.setQuestions(data);
+  const questions = new Questions(data);
 
   return (
     <div className="App">
       <h1>Troubleshot Car Issue</h1>
+
       <Chat questions={questions} />
     </div>
   );

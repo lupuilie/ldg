@@ -1,20 +1,10 @@
 class Questions {
-  constructor() {
+  constructor(inputQuestions) {
     this._questions = [];
-  }
 
-  /**
-   * Set questions. Do this first
-   * @param {Object[]} - Array of questions
-   */
-  setQuestions(inputQuestions) {
-    const arg = arguments[0];
-
-    if (arguments.length > 1)
-      throw new Error("Too many arguments. Only 1 accepted");
-    if (!Array.isArray(arg))
+    if (!Array.isArray(inputQuestions))
       throw new Error(
-        `First argument should be an Array. Provided a ${typeof arg}`
+        `inputQuestions should be an Array. Provided a ${typeof arg}`
       );
 
     for (const question of inputQuestions) {
