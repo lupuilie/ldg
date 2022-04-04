@@ -8,4 +8,6 @@
 - [ ] Printing Quotes
 - [ ] Retirement Calculator
 - [ ] Troubleshooting Car Issue
+  - [x] NPM Module
+  - [x] React App
 - [ ] Counting the Number of Characters
