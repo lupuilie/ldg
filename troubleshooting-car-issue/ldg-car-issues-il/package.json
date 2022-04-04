@@ -1,6 +1,6 @@
 {
   "name": "ldg-car-issues-il",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Send a question and get a respons",
   "homepage": "https://github.com/lupuilie/ldg/tree/main/troubleshooting-car-issue/ldg-car-issues-il",
   "main": "index.js",

@@ -57,11 +57,17 @@ class Questions {
     if (!this.checkQuestion(currentQuestion)) return;
     if (answer === undefined) throw new Error("answer {boolean} not provided");
 
-    const nextQuestionId = answer
-      ? currentQuestion.yes?.questionId
-      : currentQuestion.no?.questionId;
+    const nextQuestionId =
+      answer === true
+        ? currentQuestion.yes?.questionId
+        : currentQuestion.no?.questionId;
 
-    return this.getById(nextQuestionId) || null;
+    const questionAnswer =
+      answer === true ? currentQuestion.yes.text : currentQuestion.no.text;
+
+    if (nextQuestionId) return this.getById(nextQuestionId);
+
+    return { answer: questionAnswer };
   }
 
   /**
@@ -73,7 +79,7 @@ class Questions {
    * @param {Object} question.no
    */
   checkQuestion(question) {
-    if (!question) throw new Error("question not provided");
+    if (!question) throw new Error("question not provided or null");
     if (!question.hasOwnProperty("id"))
       throw new Error("question should have an id property");
     if (!question.hasOwnProperty("text"))
