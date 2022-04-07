@@ -2,7 +2,7 @@
   "name": "file-parser-il",
   "version": "0.0.2",
   "description": "Parse data from CSV to a readable string",
-  "main": "file-parser.js",
+  "main": "csv-parser.js",
   "homepage": "https://github.com/lupuilie/ldg/tree/main/parsing-data-file/file-parser-il",
   "type": "module",
   "scripts": {
