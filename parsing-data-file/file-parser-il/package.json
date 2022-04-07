@@ -1,10 +1,11 @@
 {
   "name": "file-parser-il",
   "version": "0.0.1",
-  "description": "",
+  "description": "Parse data from CSV to a readable string",
   "main": "file-parser.js",
   "type": "module",
   "scripts": {
+    "start": "node main.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
   },

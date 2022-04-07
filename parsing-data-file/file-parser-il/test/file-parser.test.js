@@ -1,18 +1,15 @@
-import FileParser from "../file-parser";
+import * as fs from "fs/promises";
+import parseCSV from "../csv-parser";
 
 describe("given file testfile.csv, should return the content in a readable format", () => {
-  test("readableFormat", () => {
-    async function readableFormat() {
-      const file = "./test/testfile.csv";
-      const parser = new FileParser(file);
-      const formatted = await parser.readableFormat({
-        headers: ["First", "Last", "Salary"],
-      });
-      return formatted;
+  test("readableFormat", async () => {
+    try {
+      const fileLocation = "./test/testfile.csv";
+      const data = await fs.readFile(fileLocation, { encoding: "utf8" });
+      const parsed = parseCSV(data);
+      console.log(parsed);
+    } catch (e) {
+      console.error(e);
     }
-
-    return readableFormat().then((data) => {
-      console.log(data);
-    });
   });
 });
