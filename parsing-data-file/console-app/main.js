@@ -12,7 +12,7 @@ function display(parsedCSV) {
 
 async function main() {
   const data = await readFile();
-  const parsedCSV = parseCSV(data);
+  const parsedCSV = parseCSV(data, { headers: ["First", "Last", "Salary"] });
 
   display(parsedCSV);
 }

@@ -10,6 +10,11 @@ function getColumnsLength(row) {
   return row.map((column) => column.length);
 }
 
+function getSeparator(columnLengths) {
+  const DASH = "-";
+  return columnLengths.map((count) => DASH.repeat(count));
+}
+
 function setBiggerColumns(currentMax, columnsLength) {
   columnsLength.forEach((columnLength, index) => {
     const currentValue = currentMax[index] || 0;
@@ -34,19 +39,20 @@ function formatRow(row, columnsLength) {
   return row.map((column, index) => formatColumn(column, columnsLength[index]));
 }
 
-function rowToString(row, { columnSpaces = 1 }) {
+function rowToString(row) {
   if (!row) return;
   const NEW_LINE = "\n";
   const EMPTY_SPACE = " ";
 
-  return row.join(EMPTY_SPACE.repeat(columnSpaces)) + NEW_LINE;
+  return row.join(EMPTY_SPACE) + NEW_LINE;
 }
 
-function parseCSV(data) {
+function parseCSV(data, { headers = null } = {}) {
   const contentArray = [];
   const formattedRows = [];
   const columnsLengthMax = [];
   let formattedString = "";
+  const validHeaders = headers && Array.isArray(headers);
 
   if (!data) throw new Error("no data provided");
 
@@ -65,11 +71,21 @@ function parseCSV(data) {
     contentArray.push(columns);
   }
 
+  if (validHeaders) {
+    const columnsLength = getColumnsLength(headers);
+    setBiggerColumns(columnsLengthMax, columnsLength);
+
+    const headersRow = formatRow(headers, columnsLengthMax);
+    const separatorRow = getSeparator(columnsLengthMax);
+    formattedString += rowToString(headersRow);
+    formattedString += rowToString(separatorRow);
+  }
+
   for (let index in contentArray) {
     const row = contentArray[index];
     const formattedRow = formatRow(row, columnsLengthMax);
     formattedRows[index] = formattedRow;
-    formattedString += rowToString(formattedRow, { columnSpaces: 2 });
+    formattedString += rowToString(formattedRow);
   }
 
   return formattedString;
