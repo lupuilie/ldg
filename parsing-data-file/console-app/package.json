@@ -6,5 +6,8 @@
   "type": "module",
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "file-parser-il": "^0.0.3"
   }
 }

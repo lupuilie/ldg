@@ -1,17 +1,20 @@
-// async function main() {
-//   const fileContent = await readFile("");
+import * as fs from "fs/promises";
+import parseCSV from "file-parser-il";
 
-//   const parsedCSV = parseCSV(fileContent);
+async function readFile() {
+  const fileLocation = "./testfile.csv";
+  return await fs.readFile(fileLocation, { encoding: "utf8" });
+}
 
-//   display(parsedCSV);
-// }
+function display(parsedCSV) {
+  console.log(parsedCSV);
+}
 
-// function readFile() {
-//   // TO DO
-// }
+async function main() {
+  const data = await readFile();
+  const parsedCSV = parseCSV(data);
 
-// function display(parsedCSV) {
-//   console.log(parsedCSV);
-// }
+  display(parsedCSV);
+}
 
-// main();
+main();
