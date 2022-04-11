@@ -19,4 +19,7 @@ Zarnecki Sabrina  51500
 
     expect(parsed).toBe(expected);
   });
+  test("calling parseCSV without data should throw error <no data provided>", () => {
+    expect(() => parseCSV()).toThrowError(/no data provided/);
+  });
 });
