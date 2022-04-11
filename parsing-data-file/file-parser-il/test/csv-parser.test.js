@@ -7,7 +7,7 @@ describe("parseCSV", () => {
     const data = await fs.readFile(fileLocation, { encoding: "utf8" });
     const parsed = parseCSV(data, { headers: ["First", "Last", "Salary"] });
     const expected = `First    Last     Salary
--------- -------- ------
+------------------------
 Ling     Mai      55900 
 Johnson  Jim      56500 
 Jones    Aaron    46000 

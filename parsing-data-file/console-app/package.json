@@ -8,7 +8,7 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "file-parser-il": "^0.0.5",
+    "file-parser-il": "^0.0.6",
     "process": "^0.11.10",
     "readline": "^1.3.0"
   }

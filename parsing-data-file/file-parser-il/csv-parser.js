@@ -39,12 +39,10 @@ function formatRow(row, columnsLength) {
   return row.map((column, index) => formatColumn(column, columnsLength[index]));
 }
 
-function rowToString(row) {
+function rowToString(row, { joinChar = " " } = {}) {
   if (!row) return;
   const NEW_LINE = "\n";
-  const EMPTY_SPACE = " ";
-
-  return row.join(EMPTY_SPACE) + NEW_LINE;
+  return row.join(joinChar) + NEW_LINE;
 }
 
 function parseCSV(data, { headers = null } = {}) {
@@ -78,7 +76,7 @@ function parseCSV(data, { headers = null } = {}) {
     const headersRow = formatRow(headers, columnsLengthMax);
     const separatorRow = getSeparator(columnsLengthMax);
     formattedString += rowToString(headersRow);
-    formattedString += rowToString(separatorRow);
+    formattedString += rowToString(separatorRow, { joinChar: "-" });
   }
 
   for (let index in contentArray) {
