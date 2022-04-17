@@ -1,4 +1,4 @@
-class HashTable {
+export default class HashTable {
   #maxSize;
   #table;
   #length;
@@ -14,7 +14,7 @@ class HashTable {
   }
 
   set length(param) {
-    throw new Error("You cannot change length property.");
+    throw new Error("length property cannot be directly modified");
   }
 
   display() {
@@ -28,7 +28,10 @@ class HashTable {
 
     this.#length++;
     if (isIndexEmpty) return addToIndex(this.#table, data, index);
-    return pushToIndex(this.#table, data, index);
+
+    const existingIndex = linearSearch(this.#table[index], key);
+    if (existingIndex !== null) throw new Error(`key <${key}> already exists`);
+    pushToIndex(this.#table, data, index);
   }
 
   get(key) {
@@ -60,6 +63,23 @@ class HashTable {
 
     const bucketIndex = linearSearch(this.#table[index], key);
     if (bucketIndex) return (this.#table[index][bucketIndex][1] = newValue);
+
+    throw new Error(`key <${key}> not found`);
+  }
+
+  delete(key) {
+    const index = hash(key, this.#maxSize);
+    const emptyAtIndex = this.#table[index] === undefined;
+    if (emptyAtIndex) throw new Error(`key <${key}> not found`);
+
+    this.#length--;
+    const isUniqueEntry = this.#table[index].length === 1;
+    const isWantedKey = this.#table[index][0][0] === key;
+
+    if (isUniqueEntry && isWantedKey) return (this.#table[index] = undefined);
+
+    const bucketIndex = linearSearch(this.#table[index], key);
+    if (bucketIndex) return (this.#table[index][bucketIndex] = undefined);
 
     throw new Error(`key <${key}> not found`);
   }
