@@ -9,11 +9,12 @@ describe("Queue", () => {
   describe("should be able to enqueue() and dequeue()", () => {
     const queue = new Queue(5);
     test("enqueue items [<item1> to <item5>] without throwing an error", () => {
-      queue.enqueue("item1");
-      queue.enqueue("item2");
-      queue.enqueue("item3");
-      queue.enqueue("item4");
-      queue.enqueue("item5");
+      queue
+        .enqueue("item1")
+        .enqueue("item2")
+        .enqueue("item3")
+        .enqueue("item4")
+        .enqueue("item5");
     });
     test("getFirst() should return <item1> and queue count should be <5> (five)", () => {
       expect(queue.getFirst()).toBe("item1");
@@ -36,17 +37,13 @@ describe("Queue", () => {
     });
     test("dequeue and add 4 items to the queue. count should be <4> (four) and first item <item1>", () => {
       queue.dequeue();
-      queue.enqueue("item1");
-      queue.enqueue("item2");
-      queue.enqueue("item3");
-      queue.enqueue("item4");
+      queue.enqueue("item1").enqueue("item2").enqueue("item3").enqueue("item4");
+
       expect(queue.getFirst()).toBe("item1");
     });
     test("dequeue 4 items. queue should have count <0> (zero) and getFirst() to return null", () => {
-      queue.dequeue();
-      queue.dequeue();
-      queue.dequeue();
-      queue.dequeue();
+      queue.dequeue().dequeue().dequeue().dequeue();
+
       expect(queue.count).toBe(0);
       expect(queue.getFirst()).toBe(null);
     });
@@ -58,17 +55,13 @@ describe("Queue", () => {
       expect(dequeue).toThrowError("you cannot dequeue when queue is 0 (zero)");
     });
     test("trying to enqueue more items than queue max count should throw an error", () => {
-      queue.enqueue(1);
-      queue.enqueue(2);
-      queue.enqueue(3);
-      queue.enqueue(4);
-      queue.enqueue(5);
+      queue.enqueue(1).enqueue(2).enqueue(3).enqueue(4).enqueue(5);
 
       const item6 = jest.fn(() => {
         queue.enqueue(6);
       });
+
       expect(item6).toThrowError("queue is full");
-      queue.debug();
     });
   });
 });

@@ -49,6 +49,8 @@ export default class Queue {
     this.#queue[this.#rear] = element;
     this.#count++;
     if (!isMaxCount) this.#rear++;
+
+    return this;
   }
 
   dequeue() {
@@ -60,6 +62,8 @@ export default class Queue {
     if (this.#front === this.#maxSize) this.#front = 0;
 
     this.#count--;
+
+    return this;
   }
 
   getFirst() {
