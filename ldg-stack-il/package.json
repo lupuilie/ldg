@@ -1,7 +1,8 @@
 {
   "name": "ldg-stack-il",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple implementation of Stack in JavaScript",
+  "homepage": "https://github.com/lupuilie/ldg/tree/main/ldg-stack-il",
   "main": "stack.js",
   "type": "module",
   "scripts": {
