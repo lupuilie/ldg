@@ -50,5 +50,25 @@ describe("Queue", () => {
       expect(queue.count).toBe(0);
       expect(queue.getFirst()).toBe(null);
     });
+    test("trying to dequeue when queue is empty should throw an error", () => {
+      const dequeue = jest.fn(() => {
+        queue.dequeue();
+      });
+
+      expect(dequeue).toThrowError("you cannot dequeue when queue is 0 (zero)");
+    });
+    test("trying to enqueue more items than queue max count should throw an error", () => {
+      queue.enqueue(1);
+      queue.enqueue(2);
+      queue.enqueue(3);
+      queue.enqueue(4);
+      queue.enqueue(5);
+
+      const item6 = jest.fn(() => {
+        queue.enqueue(6);
+      });
+      expect(item6).toThrowError("queue is full");
+      queue.debug();
+    });
   });
 });
