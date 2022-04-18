@@ -58,4 +58,32 @@ describe("Stack", () => {
       expect(stack.getLast()).toBe(null);
     });
   });
+  describe("use a stack to revert a string", () => {
+    test("reversed string <stack> should equal <kcats>", () => {
+      const stack = new Stack();
+      const word = "stack";
+      let reversedWord = "";
+
+      for (let letter of word) stack.push(letter);
+
+      while (stack.count > 0) {
+        reversedWord += stack.pop();
+      }
+
+      expect(reversedWord).toBe("kcats");
+    });
+    test("reversed string <abcde> should equal <edcba>", () => {
+      const stack = new Stack();
+      const word = "abcde";
+      let reversedWord = "";
+
+      for (let letter of word) stack.push(letter);
+
+      while (stack.count > 0) {
+        reversedWord += stack.pop();
+      }
+
+      expect(reversedWord).toBe("edcba");
+    });
+  });
 });
