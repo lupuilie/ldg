@@ -1,0 +1,22 @@
+{
+  "name": "ldg-stack-il",
+  "version": "0.0.1",
+  "description": "Simple implementation of Stack in JavaScript",
+  "main": "stack.js",
+  "type": "module",
+  "scripts": {
+    "start": "node stack.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll",
+    "dev": "nodemon ./stack.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "jest": "^27.5.1",
+    "jest-mock": "^27.5.1",
+    "nodemon": "^2.0.15"
+  }
+}
