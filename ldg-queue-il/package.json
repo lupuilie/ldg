@@ -1,6 +1,6 @@
 {
   "name": "ldg-queue-il",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple Queue implementation in JavaScript",
   "main": "queue.js",
   "type": "module",

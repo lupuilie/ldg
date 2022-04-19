@@ -1,10 +1,3 @@
-/**
- *
- * Stacks and Queues
- * https://www.youtube.com/watch?v=A3ZUpyrnCbM&ab_channel=CSDojo
- *
- */
-
 export default class Queue {
   #queue;
   #front;
