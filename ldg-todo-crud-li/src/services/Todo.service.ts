@@ -1,14 +1,27 @@
 import { Todo } from "../interfaces";
+import { collections } from "./database.service";
 
 export class TodoService {
   constructor(private _todos: Todo[] = []) {}
 
   public async getAll(): Promise<Todo[]> {
-    return this._todos;
+    const todos = (await collections.todos
+      ?.find({})
+      .project({ _id: 0 })
+      .toArray()) as Todo[];
+
+    return todos || [];
   }
 
   public async getById(id: number): Promise<Todo | null> {
-    const todo = this._todos.find((todo) => todo.id === id);
+    const todo = await collections.todos?.findOne<Todo>(
+      { id },
+      { projection: { _id: 0 } }
+    );
+    if (todo === null) {
+      throw new Error(`todo with id <${id}> cannot be found`);
+    }
+
     return todo || null;
   }
 
@@ -17,33 +30,45 @@ export class TodoService {
     if (todo.description === undefined)
       throw new Error(`'description' not provided`);
 
+    const todoCount = await collections.todos?.count({});
+    if (todoCount === undefined) {
+      throw new Error("cannot add new todo");
+    }
+
     const newTodo: Todo = {
-      id: this._todos.length,
+      id: todoCount + 1,
       title: todo.title,
       description: todo.description,
       dueDate: todo.dueDate || null,
       isComplete: todo.isComplete || false,
     };
 
-    this._todos.push(newTodo);
+    await collections.todos?.insertOne(newTodo);
 
-    return newTodo;
+    const { _id, ...addedTodo } = newTodo;
+
+    return addedTodo;
   }
 
-  public async update(id: number, todo: Todo): Promise<Todo> {
-    const todoId = this._todos.findIndex((todo) => todo.id === id);
+  public async update(id: number, todoProps: Todo): Promise<Todo> {
+    const updatedTodo = await collections.todos?.findOneAndUpdate(
+      { id },
+      { $set: { ...todoProps } },
+      { returnDocument: "after", projection: { _id: 0 } }
+    );
 
-    // TODO: validations for <todo>
-    this._todos[todoId] = todo;
+    if (updatedTodo === undefined || updatedTodo.value === null) {
+      throw new Error(`todo with id <${id}> cannot be updated`);
+    }
 
-    return this._todos[todoId];
+    return updatedTodo.value as Todo;
   }
 
   public async delete(id: number): Promise<boolean> {
-    const todoId = this._todos.findIndex((todo) => todo.id === id);
-    if (todoId === -1) return false;
-
-    this._todos.splice(todoId, 1);
+    const todo = await collections.todos?.deleteOne({ id });
+    if (todo?.deletedCount === 0) {
+      throw new Error(`cannot delete todo with id <${id}>`);
+    }
     return true;
   }
 }

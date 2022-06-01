@@ -11,7 +11,7 @@ export class TodoController {
   public async get(req: IncomingMessage, res: ServerResponse) {
     try {
       const todos = await todoService.getAll();
-      res.end(JSON.stringify(todos));
+      res.end(JSON.stringify({ todos }));
     } catch (error) {
       ErrorHandling.sendError(res, error, StatusCode.ServerError);
     }
@@ -28,9 +28,6 @@ export class TodoController {
       }
 
       const todo = await todoService.getById(Number(id));
-      if (!todo) {
-        throw new Error(`cannot find todo with id <${id}>`);
-      }
 
       res.end(JSON.stringify(todo));
     } catch (error) {
@@ -60,11 +57,7 @@ export class TodoController {
       }
 
       const todoUpdateProps: Todo = await parseRequestBody(req);
-      const todo = await todoService.getById(Number(id));
-      if (!todo) throw new Error(`cannot find todo with id <${id}>`);
-
-      const newTodo = { ...todo, ...todoUpdateProps };
-      const updatedTodo = await todoService.update(id, newTodo);
+      const updatedTodo: Todo = await todoService.update(id, todoUpdateProps);
 
       res.end(JSON.stringify(updatedTodo));
     } catch (error) {

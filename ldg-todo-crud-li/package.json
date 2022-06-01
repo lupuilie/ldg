@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
+    "start": "rm -rf ./dist && tsc && node dist/app.js",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
@@ -21,7 +21,9 @@
     "typescript": "^4.7.2"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
     "http": "^0.0.1-security",
+    "mongodb": "^4.6.0",
     "node-match-path": "^0.6.3"
   }
 }
