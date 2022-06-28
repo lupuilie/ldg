@@ -1,9 +1,11 @@
 import * as mongoDB from "mongodb";
 
-export const collections: {
+export type DbCollections = {
   books?: mongoDB.Collection;
   users?: mongoDB.Collection;
-} = {};
+};
+
+export const collections: DbCollections = {};
 
 export async function dbConnect(uri: string, dbName: string) {
   const client: mongoDB.MongoClient = new mongoDB.MongoClient(uri);

@@ -1,14 +1,11 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router } from "express";
 
 import usersRoute from "./usersRoute";
+import booksRoute from "./booksRoute";
 
 const router = Router();
 
-router.get("/", indexRoute);
 router.use("/users", usersRoute);
-
-function indexRoute(req: Request, res: Response, next: NextFunction) {
-  res.send("/api");
-}
+router.use("/books", booksRoute);
 
 export default router;

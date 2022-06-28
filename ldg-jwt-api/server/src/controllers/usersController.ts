@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 
+import { collections } from "../services/dbService";
 import { getAuthCredentials } from "../utils/requestUtils";
 import usersService from "../services/usersService";
-import { collections } from "../services/dbService";
 
 function usersController() {
-  const service = usersService();
+  const service = usersService(collections);
 
   async function login(req: Request, res: Response, next: NextFunction) {
     try {

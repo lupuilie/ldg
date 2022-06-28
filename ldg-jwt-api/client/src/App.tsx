@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-import "./App.css";
-
 import Header from "./components/Header";
 import { Home, Books, Users, NotFound, Login } from "./pages";
 
