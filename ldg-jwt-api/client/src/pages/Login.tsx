@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Grid, Typography, TextField, Button } from "@mui/material";
-import axios, { AxiosError, AxiosRequestHeaders } from "axios";
+import axios, { AxiosError } from "axios";
 import base64 from "base-64";
 
 export function Login() {
@@ -9,6 +9,7 @@ export function Login() {
   const [inputPassword, setInputPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
+  console.log(navigate);
 
   const onChangeUsername = (value = "") => setInputUsername(value);
   const onChangePassword = (value = "") => setInputPassword(value);

@@ -27,9 +27,7 @@ function usersService(collections: DbCollections) {
   }
 
   async function getAll() {
-    const users = await collections.users
-      ?.find<User>({}, { projection: { username: 1, role: 1 } })
-      .toArray();
+    const users = await collections.users?.find<User>({}).toArray();
     return users;
   }
 

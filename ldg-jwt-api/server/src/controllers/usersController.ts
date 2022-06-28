@@ -7,6 +7,15 @@ import usersService from "../services/usersService";
 function usersController() {
   const service = usersService(collections);
 
+  async function getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const users = await service.getAll();
+      res.json(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async function login(req: Request, res: Response, next: NextFunction) {
     try {
       const credentials = getAuthCredentials(req);
@@ -17,7 +26,7 @@ function usersController() {
     }
   }
 
-  return { login };
+  return { login, getAll };
 }
 
 export default usersController;
