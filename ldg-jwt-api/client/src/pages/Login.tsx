@@ -9,7 +9,6 @@ export function Login() {
   const [inputPassword, setInputPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
-  console.log(navigate);
 
   const onChangeUsername = (value = "") => setInputUsername(value);
   const onChangePassword = (value = "") => setInputPassword(value);
@@ -26,7 +25,6 @@ export function Login() {
         { headers }
       );
       const data = await req.data;
-      console.log(data);
       navigate("/books");
       setLoginError("");
     } catch (error) {

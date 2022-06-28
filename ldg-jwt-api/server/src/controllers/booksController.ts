@@ -12,7 +12,7 @@ function booksController() {
   async function getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const books = await service.getAll();
-      res.json(books);
+      res.json({ books });
     } catch (error) {
       next(error);
     }

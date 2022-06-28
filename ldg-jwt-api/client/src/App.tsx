@@ -1,15 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
-import { Home, Books, Users, NotFound, Login } from "./pages";
+import { Books, Users, NotFound, Login, AddBook, Favorites } from "./pages";
 
 function App() {
   return (
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/books" element={<Books />} />
+        <Route path="/" element={<Books />} />
+        <Route path="/add-book" element={<AddBook />} />
+        <Route path="/favorites" element={<Favorites />} />
         <Route path="/users" element={<Users />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />

@@ -10,7 +10,7 @@ function usersController() {
   async function getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const users = await service.getAll();
-      res.json(users);
+      res.json({ users });
     } catch (error) {
       next(error);
     }

@@ -18,8 +18,10 @@ export function Books(): JSX.Element {
     async function fetchData() {
       try {
         const req = await axios.get("http://localhost/api/books");
-        const data = req.data;
+        const data = req.data.books;
+        if (!data) return setError("could not load books");
         setBooks(data);
+        setError("");
       } catch (error) {
         setError("Could not load books");
       }
@@ -29,7 +31,7 @@ export function Books(): JSX.Element {
   return (
     <Container>
       <Paper elevation={20} sx={{ padding: "1rem" }}>
-        <Typography variant="h4">Books</Typography>
+        <Typography variant="h5">Books</Typography>
         {error && <Typography>{error}</Typography>}
         <Grid container spacing={2}>
           {books.map(({ id, name, author }) => (
