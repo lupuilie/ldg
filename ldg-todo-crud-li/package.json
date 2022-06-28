@@ -2,9 +2,11 @@
   "name": "http-node-12",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.ts",
   "scripts": {
-    "start": "rm -rf ./dist && tsc && node dist/app.js",
+    "build": "tsc",
+    "start": "node ./dist/main.js",
+    "start:dev": "rm -rf ./dist && tsc && node dist/main.js",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
@@ -24,6 +26,7 @@
     "dotenv": "^16.0.1",
     "http": "^0.0.1-security",
     "mongodb": "^4.6.0",
+    "mongodb-memory-server": "^8.6.0",
     "node-match-path": "^0.6.3"
   }
 }

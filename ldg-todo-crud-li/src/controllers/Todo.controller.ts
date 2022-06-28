@@ -1,16 +1,18 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { TodoService } from "../services/Todo.service";
 import { ErrorHandling } from "../middlewares";
 import { parseRequestBody } from "../utils";
-import { Todo } from "../interfaces";
 import { StatusCode } from "../enums/errors";
+import { app } from "../app";
 
-const todoService = new TodoService();
+import { Todo } from "../entities/Todo";
+import { TodoRepository } from "../repositories/TodoRepository";
 
 export class TodoController {
   public async get(req: IncomingMessage, res: ServerResponse) {
     try {
-      const todos = await todoService.getAll();
+      const repository = new TodoRepository(app.getDb(), "todos");
+      const todos = await repository.getAll();
+
       res.end(JSON.stringify({ todos }));
     } catch (error) {
       ErrorHandling.sendError(res, error, StatusCode.ServerError);
@@ -19,6 +21,7 @@ export class TodoController {
 
   public async getById(req: IncomingMessage, res: ServerResponse) {
     try {
+      const repository = new TodoRepository(app.getDb(), "todos");
       const url = new URL(req.url as string, `http://${req.headers.host}`);
       const urlMatch = url.pathname.match(/^([/todos]+)\/(\w+)\/?$/) || [];
       const id = Number(urlMatch[2]);
@@ -27,7 +30,7 @@ export class TodoController {
         throw new Error("id should be a number");
       }
 
-      const todo = await todoService.getById(Number(id));
+      const todo: Todo = await repository.findOne(id);
 
       res.end(JSON.stringify(todo));
     } catch (error) {
@@ -37,8 +40,11 @@ export class TodoController {
 
   public async add(req: IncomingMessage, res: ServerResponse) {
     try {
+      const repository = new TodoRepository(app.getDb(), "todos");
       const todo: Todo = await parseRequestBody(req);
-      const newTodo = await todoService.add(todo);
+      const newTodo = new Todo(todo.title, todo.description, todo.dueDate);
+
+      await repository.add(newTodo);
 
       res.end(JSON.stringify(newTodo));
     } catch (error) {
@@ -48,6 +54,7 @@ export class TodoController {
 
   public async update(req: IncomingMessage, res: ServerResponse) {
     try {
+      const repository = new TodoRepository(app.getDb(), "todos");
       const url = new URL(req.url as string, `http://${req.headers.host}`);
       const urlMatch = url.pathname.match(/^([/todos]+)\/(\w+)\/?$/) || [];
       const id = Number(urlMatch[2]);
@@ -57,9 +64,9 @@ export class TodoController {
       }
 
       const todoUpdateProps: Todo = await parseRequestBody(req);
-      const updatedTodo: Todo = await todoService.update(id, todoUpdateProps);
+      const updated = await repository.findAndUpdate(id, todoUpdateProps);
 
-      res.end(JSON.stringify(updatedTodo));
+      res.end(JSON.stringify(updated));
     } catch (error) {
       ErrorHandling.sendError(res, error, StatusCode.ClientError);
     }
@@ -67,6 +74,7 @@ export class TodoController {
 
   public async delete(req: IncomingMessage, res: ServerResponse) {
     try {
+      const repository = new TodoRepository(app.getDb(), "todos");
       const url = new URL(req.url as string, `http://${req.headers.host}`);
       const urlMatch = url.pathname.match(/^([/todos]+)\/(\w+)\/?$/) || [];
       const id = Number(urlMatch[2]);
@@ -74,7 +82,8 @@ export class TodoController {
       if (isNaN(id)) {
         throw new Error("id should be a number");
       }
-      const deleted = await todoService.delete(id);
+
+      const deleted = await repository.delete(id);
       if (!deleted) {
         throw new Error(`cannot delete todo <${id}>`);
       }

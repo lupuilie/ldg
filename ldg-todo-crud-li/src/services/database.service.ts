@@ -1,26 +1,22 @@
-import * as mongodb from "mongodb";
-import * as dotenv from "dotenv";
+import { Db, MongoClient } from "mongodb";
 
-export const collections: { todos?: mongodb.Collection } = {};
+export class Database {
+  public client: MongoClient;
+  public db: Db;
 
-export async function database() {
-  dotenv.config();
+  constructor(uri: string, db: string) {
+    this.client = new MongoClient(uri);
+    this.db = this.client.db(db);
+  }
 
-  const client: mongodb.MongoClient = new mongodb.MongoClient(
-    process.env.DB_CONN_STRING as string
-  );
+  public async connect() {
+    console.log("Database connected");
+    await this.client.connect();
 
-  await client.connect();
+    return this;
+  }
 
-  const db: mongodb.Db = client.db(process.env.DB_NAME);
-
-  const todosCollection: mongodb.Collection = db.collection(
-    process.env.TODOS_COLLECTION_NAME as string
-  );
-
-  collections.todos = todosCollection;
-
-  console.log(
-    `connect ok to ${db.databaseName}/${todosCollection.collectionName}`
-  );
+  public async close() {
+    await this.client.close();
+  }
 }
