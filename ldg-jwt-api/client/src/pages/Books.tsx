@@ -30,7 +30,7 @@ export function Books(): JSX.Element {
   }, [setBooks]);
   return (
     <Container>
-      <Paper elevation={20} sx={{ padding: "1rem" }}>
+      <Paper sx={{ padding: "1rem" }}>
         <Typography variant="h5">Books</Typography>
         {error && <Typography>{error}</Typography>}
         <Grid container spacing={2}>

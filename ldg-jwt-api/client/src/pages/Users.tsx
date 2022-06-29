@@ -25,7 +25,7 @@ export function Users(): JSX.Element {
 
   return (
     <Container>
-      <Paper elevation={20} sx={{ padding: "1rem" }}>
+      <Paper sx={{ padding: "1rem" }}>
         <Typography variant="h5">Users</Typography>
         <Grid container spacing={2}>
           {users.map((user) => (

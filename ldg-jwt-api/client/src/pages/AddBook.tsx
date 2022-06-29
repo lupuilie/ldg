@@ -11,11 +11,10 @@ import {
 export function AddBook() {
   return (
     <Container>
-      <Paper>
+      <Paper sx={{ padding: "1rem" }}>
+        <Typography variant="h5">Add Book</Typography>
         <Grid container direction="column" sx={{ gap: "8px" }}>
-          <Grid item>
-            <Typography variant="h3">Add Book</Typography>
-          </Grid>
+          <Grid item></Grid>
           <Grid item>
             <TextField label="username" size="small" />
           </Grid>

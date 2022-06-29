@@ -11,7 +11,7 @@ const ulStyle: React.CSSProperties = {
 
 export default function Header() {
   return (
-    <Paper elevation={20} sx={{ padding: "1rem", marginBottom: "2rem" }}>
+    <Paper elevation={8} sx={{ padding: "1rem", marginBottom: "2rem" }}>
       <Container>
         <ul style={ulStyle}>
           <li>
