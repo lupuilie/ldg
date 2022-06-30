@@ -6,6 +6,7 @@ export default class User {
     public key: string,
     public firstName: string,
     public lastName: string,
+    public favorite: string[],
     public role: string,
     public id: string,
     public _id: ObjectId

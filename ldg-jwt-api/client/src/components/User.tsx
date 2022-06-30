@@ -15,6 +15,7 @@ type UserProps = {
   lastName: string;
   role: string;
 };
+
 function User({ username, role, firstName, lastName }: UserProps) {
   return (
     <Grid item>

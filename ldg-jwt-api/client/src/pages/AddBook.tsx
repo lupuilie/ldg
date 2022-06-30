@@ -16,17 +16,21 @@ export function AddBook() {
   const [bookAuthor, setBookAuthor] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [disabledSubmit, setDisabledSubmit] = useState(true);
 
   const onChangeBookName = (name: string) => {
     setBookName(name);
   };
   const onChangeBookAuthor = (name: string) => setBookAuthor(name);
   const handleClose = () => setOpen(false);
+
   const onClick = async () => {
     const book = { name: bookName, author: bookAuthor };
     try {
-      const req = await axios.post("http://localhost/api/books", book);
+      await axios.post(
+        "http://localhost/api/books",
+        { ...book },
+        { withCredentials: true }
+      );
       setMessage("Book Added");
       setOpen(true);
       setBookName("");
@@ -72,7 +76,6 @@ export function AddBook() {
               variant="contained"
               color="primary"
               onClick={onClick}
-              disabled={disabledSubmit}
             >
               Add Book
             </Button>

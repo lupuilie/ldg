@@ -4,9 +4,11 @@ import { collections } from "../services/dbService";
 import { getAuthCredentials } from "../utils/requestUtils";
 import usersService from "../services/usersService";
 import { tokenService } from "../services/tokenService";
+import booksService from "../services/booksService";
 
 function usersController() {
   const service = usersService(collections);
+  const books = booksService(collections);
   const tokens = tokenService();
 
   async function getAll(req: Request, res: Response, next: NextFunction) {
@@ -29,7 +31,7 @@ function usersController() {
         sameSite: "none",
         secure: true,
       });
-      res.json({ ok: true, login, token });
+      res.json({ ok: true, ...login, token });
     } catch (error) {
       next(error);
     }
@@ -44,7 +46,19 @@ function usersController() {
     }
   }
 
-  return { login, logout, getAll };
+  async function favorite(req: Request, res: Response, next: NextFunction) {
+    try {
+      const username = req.params.username;
+      const favoriteBooksIds = await service.getFavoriteBooks(username);
+      const favoriteBooks = await books.getBatch(favoriteBooksIds);
+
+      res.json(favoriteBooks);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  return { login, logout, getAll, favorite };
 }
 
 export default usersController;

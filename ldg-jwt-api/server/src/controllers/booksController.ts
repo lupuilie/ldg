@@ -3,8 +3,8 @@ import { ObjectId } from "mongodb";
 import { v4 as uuid } from "uuid";
 import Book from "../models/book";
 
-import booksService from "../services/booksService";
 import { collections } from "../services/dbService";
+import booksService from "../services/booksService";
 
 function booksController() {
   const service = booksService(collections);

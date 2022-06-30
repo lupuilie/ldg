@@ -23,7 +23,23 @@ function booksService(collections: DbCollections) {
     return book;
   }
 
-  return { getAll, add };
+  async function getById(id: string) {
+    if (!collections.books) throw new Error("cannot get book");
+    const book = await collections.books.findOne<Book>({ id });
+
+    return book;
+  }
+
+  async function getBatch(bookIds: string[]) {
+    const books: Book[] = [];
+    for await (let id of bookIds) {
+      const book = await getById(id);
+      if (book) books.push(book);
+    }
+    return books;
+  }
+
+  return { getAll, add, getBatch };
 }
 
 export default booksService;

@@ -2,16 +2,10 @@ import { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import { Grid, Container, Typography, Paper } from "@mui/material";
 import { Book } from "../components/Book";
-
-type Book = {
-  id: string;
-  _id: string;
-  name: string;
-  author: string;
-};
+import { IBook } from "../types";
 
 export function Books(): JSX.Element {
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<IBook[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {

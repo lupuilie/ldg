@@ -32,7 +32,8 @@ export function Login() {
         { headers, withCredentials: true }
       );
       const data = await req.data;
-      // navigate("/books");
+      localStorage.setItem("user", JSON.stringify(data));
+      navigate("/books");
       setLoginError("");
     } catch (error) {
       if (error instanceof AxiosError) {

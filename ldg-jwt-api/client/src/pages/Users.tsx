@@ -2,17 +2,10 @@ import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { Paper, Container, Typography, Grid } from "@mui/material";
 import User from "../components/User";
-
-type User = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  favorite: string[];
-  role: string;
-};
+import { IUser } from "../types";
 
 export function Users(): JSX.Element {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {

@@ -38,7 +38,12 @@ function usersService(collections: DbCollections) {
     return { username: user.username, role: user.role };
   }
 
-  return { login, getAll, getByUsername };
+  async function getFavoriteBooks(username: string) {
+    const user = await getByUsername(username);
+    return user.favorite;
+  }
+
+  return { login, getAll, getByUsername, getFavoriteBooks };
 }
 
 export default usersService;
