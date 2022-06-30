@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios, { AxiosError } from "axios";
 import {
   Grid,
@@ -8,6 +8,7 @@ import {
   Container,
   Paper,
   Snackbar,
+  ButtonBase,
 } from "@mui/material";
 
 export function AddBook() {
@@ -15,8 +16,11 @@ export function AddBook() {
   const [bookAuthor, setBookAuthor] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [disabledSubmit, setDisabledSubmit] = useState(true);
 
-  const onChangeBookName = (name: string) => setBookName(name);
+  const onChangeBookName = (name: string) => {
+    setBookName(name);
+  };
   const onChangeBookAuthor = (name: string) => setBookAuthor(name);
   const handleClose = () => setOpen(false);
   const onClick = async () => {
@@ -68,6 +72,7 @@ export function AddBook() {
               variant="contained"
               color="primary"
               onClick={onClick}
+              disabled={disabledSubmit}
             >
               Add Book
             </Button>

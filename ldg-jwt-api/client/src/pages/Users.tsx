@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Paper, Container, Typography, Grid } from "@mui/material";
 import User from "../components/User";
 
@@ -13,12 +13,26 @@ type User = {
 
 export function Users(): JSX.Element {
   const [users, setUsers] = useState<User[]>([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      const req = await axios.get("http://localhost/api/users");
-      const data = req.data.users;
-      setUsers(data);
+      try {
+        const req = await axios.get("http://localhost/api/users", {
+          withCredentials: true,
+        });
+        const data = req.data.users;
+        setUsers(data);
+        setError("");
+      } catch (error) {
+        let message = "Cannot get any data";
+        if (error instanceof AxiosError) {
+          if (error.response?.data?.message) {
+            message = error.response.data.message;
+          }
+        }
+        setError(message);
+      }
     }
     fetchData();
   }, [setUsers]);
@@ -27,6 +41,7 @@ export function Users(): JSX.Element {
     <Container>
       <Paper sx={{ padding: "1rem" }}>
         <Typography variant="h5">Users</Typography>
+        {error && <Typography>{error}</Typography>}
         <Grid container spacing={2}>
           {users.map((user) => (
             <User {...user} />
