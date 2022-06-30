@@ -35,7 +35,16 @@ function usersController() {
     }
   }
 
-  return { login, getAll };
+  async function logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.clearCookie("token");
+      res.json({ message: "Cookies cleared" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  return { login, logout, getAll };
 }
 
 export default usersController;

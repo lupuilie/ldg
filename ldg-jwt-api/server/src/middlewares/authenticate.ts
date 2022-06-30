@@ -10,11 +10,9 @@ function authenticate(allowed: string) {
 
       if (!token) throw new createHttpError.Unauthorized("you need to login");
       const audience = service.getAudience(token);
-      console.log(audience);
+
       if (!audience?.includes(allowed))
-        throw new createHttpError.Unauthorized(
-          "you cannot access this resource"
-        );
+        throw new createHttpError.Forbidden("you cannot access this resource");
       next();
     } catch (error) {
       next(error);
