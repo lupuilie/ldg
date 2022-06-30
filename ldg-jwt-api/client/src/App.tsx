@@ -9,6 +9,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Books />} />
+        <Route path="/books" element={<Books />} />
         <Route path="/add-book" element={<AddBook />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/users" element={<Users />} />

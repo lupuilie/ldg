@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Grid, Container, Typography, Paper } from "@mui/material";
 import { Book } from "../components/Book";
 
@@ -17,13 +17,21 @@ export function Books(): JSX.Element {
   useEffect(() => {
     async function fetchData() {
       try {
-        const req = await axios.get("http://localhost/api/books");
+        const req = await axios.get("http://localhost/api/books", {
+          withCredentials: true,
+        });
         const data = req.data.books;
         if (!data) return setError("could not load books");
         setBooks(data);
         setError("");
       } catch (error) {
-        setError("Could not load books");
+        let message = "Could not load books";
+        if (error instanceof AxiosError) {
+          if (error.response?.data?.message) {
+            message = error.response.data.message;
+          }
+        }
+        setError(message);
       }
     }
     fetchData();

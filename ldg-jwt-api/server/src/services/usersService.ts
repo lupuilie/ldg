@@ -33,15 +33,12 @@ function usersService(collections: DbCollections) {
 
   async function login(loginProps: loginProps) {
     const user = await getByUsername(loginProps.username);
-    const checkCredentials = await isCredentialsValid(
-      user,
-      loginProps.password
-    );
+    await isCredentialsValid(user, loginProps.password);
 
     return { username: user.username, role: user.role };
   }
 
-  return { login, getAll };
+  return { login, getAll, getByUsername };
 }
 
 export default usersService;

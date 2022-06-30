@@ -29,10 +29,10 @@ export function Login() {
       const req = await axios.post(
         "http://localhost/api/users/login",
         {},
-        { headers }
+        { headers, withCredentials: true }
       );
       const data = await req.data;
-      navigate("/books");
+      // navigate("/books");
       setLoginError("");
     } catch (error) {
       if (error instanceof AxiosError) {
