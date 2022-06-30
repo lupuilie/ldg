@@ -14,7 +14,8 @@ export function tokenService() {
 
   function getAudience(token: string) {
     const decoded = jwt.decode(token) as JwtPayload;
-    return decoded.aud || null;
+    if (!decoded?.aud || !Array.isArray(decoded.aud)) return [];
+    return decoded.aud;
   }
 
   async function generateToken(prevToken: string | null, userName: string) {

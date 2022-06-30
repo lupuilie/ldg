@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { Grid, Container, Typography, Paper } from "@mui/material";
 import { Book } from "../components/Book";
 import { IBook } from "../types";
+import UserService from "../services/UserService";
 
 export function Books(): JSX.Element {
   const [books, setBooks] = useState<IBook[]>([]);
@@ -11,9 +12,11 @@ export function Books(): JSX.Element {
   useEffect(() => {
     async function fetchData() {
       try {
-        const req = await axios.get("http://localhost/api/books", {
-          withCredentials: true,
-        });
+        const req = await axios.get(
+          "http://localhost/api/books",
+          UserService.getAuthHeader()
+        );
+
         const data = req.data.books;
         if (!data) return setError("could not load books");
         setBooks(data);
@@ -35,11 +38,13 @@ export function Books(): JSX.Element {
       <Paper sx={{ padding: "1rem" }}>
         <Typography variant="h5">Books</Typography>
         {error && <Typography>{error}</Typography>}
-        <Grid container spacing={2}>
-          {books.map(({ id, name, author }) => (
-            <Book key={id} title={name} author={author} />
-          ))}
-        </Grid>
+        {books && (
+          <Grid container spacing={2}>
+            {books.map(({ id, name, author }) => (
+              <Book key={id} title={name} author={author} />
+            ))}
+          </Grid>
+        )}
       </Paper>
     </Container>
   );

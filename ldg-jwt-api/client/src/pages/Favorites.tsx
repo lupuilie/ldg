@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Grid, Typography, Container, Paper } from "@mui/material";
 import { Book } from "../components/Book";
 import { IBook, IUser } from "../types";
+import UserService from "../services/UserService";
 
 export function Favorites() {
   const [books, setBooks] = useState<IBook[]>();
@@ -18,9 +19,17 @@ export function Favorites() {
       try {
         const username = loggedUser.username;
         const url = `http://localhost/api/users/${username}/favorite`;
-        const books = await axios.get(url, { withCredentials: true });
+        const books = await axios.get(url, UserService.getAuthHeader());
         if (books.data) setBooks(books.data);
-      } catch (error) {}
+      } catch (error) {
+        let message = "Could not load favorite books";
+        if (error instanceof AxiosError) {
+          if (error.response?.data?.message) {
+            message = error.response.data.message;
+          }
+          setError(message);
+        }
+      }
     }
     fetchBooks();
   }, []);

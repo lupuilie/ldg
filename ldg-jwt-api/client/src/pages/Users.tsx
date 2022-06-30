@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { Paper, Container, Typography, Grid } from "@mui/material";
 import User from "../components/User";
 import { IUser } from "../types";
+import UserService from "../services/UserService";
 
 export function Users(): JSX.Element {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -11,9 +12,10 @@ export function Users(): JSX.Element {
   useEffect(() => {
     async function fetchData() {
       try {
-        const req = await axios.get("http://localhost/api/users", {
-          withCredentials: true,
-        });
+        const req = await axios.get(
+          "http://localhost/api/users",
+          UserService.getAuthHeader()
+        );
         const data = req.data.users;
         setUsers(data);
         setError("");

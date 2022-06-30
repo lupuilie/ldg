@@ -5,3 +5,9 @@ export type IUser = {
   favorite: string[];
   role: string;
 };
+
+export type ILoggedUser = {
+  username: string;
+  role: string;
+  token: string;
+};
