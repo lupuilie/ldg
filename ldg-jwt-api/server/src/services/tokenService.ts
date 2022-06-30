@@ -1,3 +1,4 @@
+import { Request } from "express";
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 import { JWT_CONFIG } from "../config";
 import { collections } from "./dbService";
@@ -46,5 +47,18 @@ export function tokenService() {
     });
   }
 
-  return { getUsername, getAudience, generateToken, verifyToken };
+  function tokenFromRequest(req: Request) {
+    const authorizationHeader = req.headers.authorization?.split(" ");
+    if (!authorizationHeader || authorizationHeader.length !== 2) return null;
+
+    return authorizationHeader[1];
+  }
+
+  return {
+    getUsername,
+    getAudience,
+    generateToken,
+    verifyToken,
+    tokenFromRequest,
+  };
 }

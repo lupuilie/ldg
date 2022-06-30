@@ -6,10 +6,11 @@ function authenticate(allowed: string) {
   return function (req: Request, res: Response, next: NextFunction) {
     try {
       const service = tokenService();
-      const token = req.cookies.token;
+      const token = service.tokenFromRequest(req);
 
       if (!token) throw new createHttpError.Unauthorized("you need to login");
       const audience = service.getAudience(token);
+      console.log(audience);
 
       if (!audience?.includes(allowed))
         throw new createHttpError.Forbidden("you cannot access this resource");
